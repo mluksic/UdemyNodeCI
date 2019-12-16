@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - "8"
+dist: trusty
+services:
+  - mongodb
+  - redis-server
+env:
+  # env variables have to be in the same line so that travis starts one build instead of two (one with NODE_ENV=ci variable and other with PORT=3000)
+  - NODE_ENV=ci PORT=3000
+cache:
+  directories:
+    - node_modules
+    - client/node_modules
+install:
+  - npm install
+  # to build 'client' (react) project inside a 'client/build' folder so express API can serve it
+  - npm run build
+script:
+  # 'nohangup' command - in case Travis closes shell window by any chance, API server process will still run in the background
+  # 'npm run start' command - starts the API server (node index.js)
+  # '&' command - runs the command in the background (but it stops if shell closes up, therefore we use 'nohup' command)
+  # 'pkill node' command - kills the API server that's running in the background
+  - nohup npm run start &
+  # sleep 3 seconds to make sure server is up and running and can start running the tests
+  - sleep 3
+  - npm run tests
