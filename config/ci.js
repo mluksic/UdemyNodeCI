@@ -4,7 +4,7 @@ module.exports = {
   googleClientSecret: "KnH-rZC23z4fr2CN4ISK4srN",
   // this URI was set because travis docs states 'mongodb' service is available at localhost:27
   // 'blog_ci' DB will be automatically created on first run
-  mongoURI: "mongodb://127.0.0.1:27/blog_ci",
+  mongoURI: "mongodb://127.0.0.1:27017/blog_ci",
   cookieKey: "123123123",
   redisUrl: "redis://127.0.0.1:6379"
 };
